@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="icon" href="favicon.ico"/>
+
+    <title>Home</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+            href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous"/>
+
+    <link th:href="@{css/style.css}" rel="stylesheet"/>
+</head>
+<body class="gray-bg">
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <button data-id="createButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCreateBug">Create</button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="modal fade" id="modalCreateBug">
+    <div class="vertical-alignment-helper">
+    <div class="modal-dialog vertical-align-center ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Create Bug</h4>
+            </div>
+
+            <div class="modal-body">
+                <form autocomplete="off" action="#" th:action="@{/home}"
+                      th:object="${bug}" method="post" class="m-t" role="form"
+                      data-toggle="validator">
+                    <div th:if="${#fields.hasErrors('summary')}"
+                         th:errors="*{summary}"
+                         class="validation-message alert alert-danger" role="alert"></div>
+
+                    <div th:if="${#fields.hasErrors('description')}"
+                         th:errors="*{description}"
+                         class="validation-message alert alert-danger" role="alert"></div>
+
+
+                    <div class="form-group input-group has-feedback">
+                        <label th:if="${#fields.hasErrors('summary')}"
+                               th:errors="*{summary}" class="validation-message"></label>
+                        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </span>
+                        <input type="text" th:field="*{summary}"
+                               placeholder="Summary" class="form-control" required/>
+                        <span class="glyphicon form-control-feedback"
+                              aria-hidden="true"></span>
+                    </div>
+
+                    <div class="form-group input-group has-feedback">
+                        <label th:if="${#fields.hasErrors('description')}"
+                               th:errors="*{description}" class="validation-message"></label>
+                        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-edit"></span>
+          </span>
+                        <input type="text" th:field="*{description}"
+                               placeholder="Description" class="form-control" required/>
+                        <span class="glyphicon form-control-feedback"
+                              aria-hidden="true"></span>
+                    </div>
+
+                    <div class="form-group input-group has-feedback">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-leaf"></span>
+          </span>
+                        <select th:field="*{priority}" placeholder="Priority" class="form-control" required>
+                            <option value="Major">Major</option>
+                            <option value="Blocker">Blocker</option>
+                            <option value="Critical">Critical</option>
+                            <option value="Minor">Minor</option>
+                        </select>
+                        <span class="glyphicon form-control-feedback"
+                              aria-hidden="true"></span>
+                    </div>
+
+                    <div th:if="${#fields.hasErrors('assignee')}"
+                         th:errors="*{assignee}"
+                         class="validation-message alert alert-danger" role="alert"></div>
+
+                    <div class="form-group input-group has-feedback">
+                        <label th:if="${#fields.hasErrors('assignee')}"
+                               th:errors="*{assignee}" class="validation-message"></label>
+                        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+
+                        <input type="text" th:field="*{assignee}"
+                               placeholder="Assignee" class="form-control" required/>
+                        <span class="glyphicon form-control-feedback"
+                              aria-hidden="true"></span>
+                    </div>
+                </form>
+                <p class="m-t">
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" data-dismiss="modal">Create</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<script
+        src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<!-- Bootstrap -->
+<script
+        src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<!-- Bootstrap Validator plugin -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+
+<script th:src="@{js/home.js}"></script>
+
+</body>
+</html>
